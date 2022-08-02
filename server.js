@@ -6,7 +6,7 @@ const server = require('http').Server(app);
 
 
 // Serve only the static files form the angularapp directory
-app.use(express.static(__dirname + '/admin-dash-board'));
+app.use(express.static(__dirname + '/dist/admin-dash-board'));
  
 app.get('/*', function(req,res) {
  
