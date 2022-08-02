@@ -6,11 +6,11 @@ const server = require('http').Server(app);
 
 
 // Serve only the static files form the angularapp directory
-app.use(express.static(__dirname + '/winemarketv2-admin'));
+app.use(express.static(__dirname + '/admin-dash-board'));
  
 app.get('/*', function(req,res) {
  
-res.sendFile(path.join(__dirname+'/winemarketv2-admin/index.html'));
+res.sendFile(path.join(__dirname + '/dist/admin-dash-board/index.html'));
 });
  
 // Start the app by listening on the default Heroku port
