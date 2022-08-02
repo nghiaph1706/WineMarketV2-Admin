@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { Category } from 'src/app/entity/category.entity';
 import { Product } from 'src/app/entity/product.entity';
 
-const _api = 'http://localhost:8080/api/v1/category/';
+const _api = 'https://winemarketv2-server.herokuapp.com/api/v1/category/';
 @Injectable({
   providedIn: 'root'
 })

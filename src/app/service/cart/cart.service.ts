@@ -5,7 +5,7 @@ import { Cart } from 'src/app/entity/cart.entity';
 import { CartDetails } from 'src/app/entity/cartDetails.entity';
 import { AuthService } from '../utils/auth.service';
 
-const _api = 'http://localhost:8080/api/v1/cart/';
+const _api = 'https://winemarketv2-server.herokuapp.com/api/v1/cart/';
 @Injectable({
   providedIn: 'root'
 })

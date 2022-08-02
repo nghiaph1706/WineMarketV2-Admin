@@ -4,7 +4,7 @@ import { map, Observable } from 'rxjs';
 import { Product } from 'src/app/entity/product.entity';
 import { AuthService } from '../utils/auth.service';
 
-const _api = 'http://localhost:8080/api/v1/product/';
+const _api = 'https://winemarketv2-server.herokuapp.com/api/v1/product/';
 @Injectable({
   providedIn: 'root'
 })

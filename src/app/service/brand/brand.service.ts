@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Brand } from 'src/app/entity/brand.entity';
 
-const _api = 'http://localhost:8080/api/v1/brand/';
+const _api = 'https://winemarketv2-server.herokuapp.com/api/v1/brand/';
 @Injectable({
   providedIn: 'root'
 })

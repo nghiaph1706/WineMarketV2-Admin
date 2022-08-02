@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
 
-const _api = 'http://localhost:8080/api/v1/upload/';
+const _api = 'https://winemarketv2-server.herokuapp.com/api/v1/upload/';
 @Injectable({
   providedIn: 'root'
 })
