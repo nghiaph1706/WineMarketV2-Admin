@@ -15,6 +15,7 @@ import { UploadService } from 'src/app/service/utils/upload.service';
 })
 export class ProductComponent implements OnInit {
   fileName: string = '';
+  page: number = 0
   productForm: FormGroup = new FormGroup({
     Name: new FormControl(),
     Image: new FormControl(),
@@ -38,17 +39,17 @@ export class ProductComponent implements OnInit {
   ngOnInit(): void {
     this.prod.image = 'null.png'
     this.fileName = 'null.png'
-    this.categoryService.getAll().subscribe(
-      res => {
-        this.categories = res
-      },
-      err => {
-        console.log(err);
-      }
-    )
-    this.productService.getProductsLimit(100).subscribe(
+    this.productService.getProductsLimit(5).subscribe(
       res => {
         this.products = res
+        this.categoryService.getAll().subscribe(
+          res => {
+            this.categories = res
+          },
+          err => {
+            console.log(err);
+          }
+        )
       },
       err => {
         console.log(err)
@@ -176,7 +177,7 @@ export class ProductComponent implements OnInit {
 
   clearFilterForm() {
     this.filterForm.reset()
-    this.productService.getProductsLimit(100).subscribe(
+    this.productService.getProductsLimit(7).subscribe(
       res => {
         this.products = res
       },
@@ -205,6 +206,30 @@ export class ProductComponent implements OnInit {
       err => {
         console.log(err);
       })
+  }
+
+  showProductNext(page: number){
+    this.page++
+    this.productService.getProductsLimit(7, page).subscribe(
+      res => {
+        this.products = res
+      },
+      err => {
+        this.products = new Array
+      }
+    )
+  }
+
+  showProductPrev(page: number){
+    this.page--
+    this.productService.getProductsLimit(7, page < 0 ? 0 : page).subscribe(
+      res => {
+        this.products = res
+      },
+      err => {
+        this.products = new Array
+      }
+    )
   }
 
 }

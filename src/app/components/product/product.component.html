@@ -47,7 +47,7 @@
 <div class="container-fluid pt-4 px-4">
     <div class="row g-4">
         <div class="col-sm-12 col-xl-12">
-            <div class="bg-light rounded h-100 p-4">
+            <div class="bg-light rounded h-60 p-4">
                 <div class="row">
                     <form class="d-none d-md-flex " [formGroup]="filterForm" (ngSubmit)="onFilter()">
                         <input value=" " class="form-control border-0" type="text" formControlName="name_like" placeholder="Search Product">
@@ -73,7 +73,7 @@
                         <button (click)="clearFilterForm()" class="btn btn-primary ms-3"><i class="fas fa-times"></i></button>
                     </form>
                 </div>
-                <div class="table-wrapper-scroll-y my-custom-scrollbar">
+                <div class="table-wrapper-scroll-y my-custom-scrollbar p-4" style="max-height: 350px;">
                     <table id="tableData" class="table table-hover">
                         <thead>
                             <tr>
@@ -99,6 +99,10 @@
                             </tr>
                         </tbody>
                     </table>
+                </div>
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <button (click)="showProductPrev(page)" type="button" class="btn btn-primary">Previous</button>
+                    <button (click)="showProductNext(page)" type="button" class="btn btn-primary">Next</button>
                 </div>
             </div>
         </div>
