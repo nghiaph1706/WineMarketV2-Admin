@@ -1,0 +1,106 @@
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <div class="col-sm-12 col-xl-6">
+            <div class="bg-light rounded h-100 p-4">
+                <h6 class="mb-4">Product</h6>
+                <form [formGroup]="productForm" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Product</label>
+                        <input type="text" formControlName="Name" class="form-control" value="{{prod.name}}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="formFile" class="form-label">Image</label> 
+                        <input formControlName="Image" class="form-control" type="file" id="formFile" id="attach" (change)="onFileSelected($event)">
+                    </div>
+                    <label for="exampleInputEmail1" class="form-label">Category</label>
+                    <select formControlName="Category" class="form-select mb-3" aria-label="Default select example" (change)="loadBrandByCategory($any($event.target).value)">
+                        <option disabled>--Category--</option>
+                        <option *ngFor="let category of categories" value="{{category.id}}"
+                            [selected]="category.id == prod.categoryId">{{category.name}}</option>
+                    </select>
+                    <label for="exampleInputEmail1" class="form-label">Brand</label>
+                    <select formControlName="Brand" class="form-select mb-3" aria-label="Default select example">
+                        <option>--Brand--</option>
+                        <option *ngFor="let brand of brands" value="{{brand.id}}" [selected]="brand.id == prod.brandId">
+                            {{brand.name}}</option>
+                    </select> 
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Price</label>
+                        <input type="text" formControlName="Price" class="form-control" value="{{prod.price}}">
+                    </div>
+                    <button *ngIf="prod.id != null" (click)="onUpdate(prod.id)" class="btn btn-primary m-2">Update</button>
+                    <button *ngIf="prod.id == null" (click)="onCreate()" class="btn btn-primary m-2">Add</button>
+                    <button *ngIf="prod.id != null" (click)="onDelete(prod.id)" class="btn btn-primary m-2">Delete</button>
+                    <button *ngIf="prod.id != null" (click)="clearProductForm()" class="btn btn-primary m-2">Cancel</button>
+                </form>
+            </div>
+        </div>
+        <div class="col-sm-12 col-xl-6">
+            <div class="bg-light rounded h-100 p-4 align-items-center justify-content-center mx-0">
+                <img class="rounded mx-auto d-block" alt="none" style="width: 70%;"
+                    src="https://res.cloudinary.com/winemarket/image/upload/v1659403232/winemarket/product/{{prod.image}}">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <div class="col-sm-12 col-xl-12">
+            <div class="bg-light rounded h-100 p-4">
+                <div class="row">
+                    <form class="d-none d-md-flex " [formGroup]="filterForm" (ngSubmit)="onFilter()">
+                        <input value=" " class="form-control border-0" type="text" formControlName="name_like" placeholder="Search Product">
+                        <select formControlName="sort" class="form-select ms-3" aria-label="Default select example">
+                            <option disabled>--Sort--</option>
+                            <option value="name">Name</option>
+                            <option value="price">Price</option>
+                        </select>
+                        <select formControlName="order" class="form-select ms-3" aria-label="Default select example">
+                            <option disabled>--Order--</option>
+                            <option value="asc">ASC</option>
+                            <option value="desc">DESC</option>
+                        </select>
+                        <select formControlName="categoryId" class="form-select ms-3" aria-label="Default select example" (change)="loadBrandByCategory($any($event.target).value)">
+                            <option disabled>--Category--</option>
+                            <option *ngFor="let category of categories" value="{{category.id}}">{{category.name}}</option>
+                        </select>
+                        <select formControlName="brandId" class="form-select ms-3" aria-label="Default select example">
+                            <option>--Brand--</option>
+                            <option *ngFor="let brand of brands" value="{{brand.id}}">{{brand.name}}</option>
+                        </select>
+                        <button type="submit" class="btn btn-primary ms-3"><i class="fas fa-filter"></i></button>
+                        <button (click)="clearFilterForm()" class="btn btn-primary ms-3"><i class="fas fa-times"></i></button>
+                    </form>
+                </div>
+                <div class="table-wrapper-scroll-y my-custom-scrollbar">
+                    <table id="tableData" class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Product</th>
+                                <th scope="col">Brand</th>
+                                <th scope="col">Category</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let product of products; index as i">
+                                <td>{{i + 1}}</td>
+                                <td>{{product.name}}</td>
+                                <td>{{product.brand}}</td>
+                                <td>{{product.category}}</td>
+                                <td>${{product.price}}</td>
+                                <td>
+                                    <a (click)="onEdit(product.id)" class="btn btn-primary me-1"><i class="fas fa-edit"></i></a> 
+                                    <a (click)="onDelete(product.id)" class="btn btn-primary me-1"><i class="fas fa-trash"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,99 @@
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <div class="col-sm-12 col-xl-6">
+            <div class="bg-light rounded h-100 p-4">
+                <h6 class="mb-4">User</h6>
+                <form [formGroup]="userForm" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Username</label>
+                        <input type="text" formControlName="Username" value="{{user.username}}" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="formFile" class="form-label">Image</label>
+                        <input class="form-control" formControlName="Image" type="file" id="formFile" (change)="onFileSelected($event)">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Email</label>
+                        <input type="email" formControlName="Email" value="{{user.email}}" class="form-control"
+                            id="exampleInputEmail1" aria-describedby="emailHelp">
+                    </div>
+                    <div class="mb-3">
+                        <div class="row">
+                            <label for="exampleInputEmail1" class="form-label">Role</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" id="inlineRadio1" formControlName="Role" value="true" [checked]="user.role"> 
+                            <label class="form-check-label" for="inlineRadio1">Admin</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" id="inlineRadio2" formControlName="Role" value="false" [checked]="!user.role">
+                            <label class="form-check-label" for="inlineRadio2">User</label>
+                        </div>
+                    </div>
+                    <button *ngIf="user.id != ''" (click)="onUpdate(user.id)"
+                        class="btn btn-primary m-2">Update</button>
+                    <button *ngIf="user.id == ''" (click)="onCreate()" class="btn btn-primary m-2">Add</button>
+                    <button *ngIf="user.id != ''" (click)="onDelete(user.id)"
+                        class="btn btn-primary m-2">Delete</button>
+                    <button *ngIf="user.id != ''" (click)="clearUserForm()"
+                        class="btn btn-primary m-2">Cancel</button>
+                </form>
+            </div>
+        </div>
+        <div class="col-sm-12 col-xl-6">
+            <div class="bg-light rounded h-100 p-4 align-items-center justify-content-center mx-0">
+                <img class="rounded mx-auto d-block" alt="none" style="width: 60%;"
+                    src="https://res.cloudinary.com/winemarket/image/upload/v1659403526/winemarket/user/{{user.image}}">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <div class="col-sm-12 col-xl-12">
+            <div class="bg-light rounded h-100 p-4">
+                <div class="row">
+                    <form class="d-none d-md-flex " [formGroup]="filterForm" (ngSubmit)="onFilter()">
+                        <input class="form-control border-0 ms-3" type="text" formControlName="Username"
+                            placeholder="Search by Username">
+                        <input class="form-control border-0 ms-3" type="email" formControlName="Email"
+                            placeholder="Search by Email">
+                        <select formControlName="Role" class="form-select ms-3" aria-label="Default select example">
+                            <option disabled>--Role--</option>
+                            <option value="true">Admin</option>
+                            <option value="false">User</option>
+                        </select>
+                        <button type="submit" class="btn btn-primary ms-3"><i class="fas fa-filter"></i></button>
+                        <button (click)="clearFilterForm()" class="btn btn-primary ms-3"><i class="fas fa-times"></i></button>
+                    </form>
+                </div>
+                <div class="table-wrapper-scroll-y my-custom-scrollbar">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Username</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Role</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let user of users; index as i">
+                                <td>{{i + 1}}</td>
+                                <td>{{user.username}}</td>
+                                <td>{{user.email}}</td>
+                                <td>{{user.role ? 'Admin' : 'User'}}</td>
+                                <td>
+                                    <a (click)="onEdit(user.id)" class="btn btn-primary me-1"><i class="fas fa-edit"></i></a>
+                                    <a (click)="onDelete(user.id)" class="btn btn-primary me-1"><i class="fas fa-trash"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
