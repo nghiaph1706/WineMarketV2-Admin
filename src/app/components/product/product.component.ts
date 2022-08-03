@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Brand } from 'src/app/entity/brand.entity';
 import { Category } from 'src/app/entity/category.entity';
 import { Product } from 'src/app/entity/product.entity';
@@ -17,11 +17,11 @@ export class ProductComponent implements OnInit {
   fileName: string = '';
   page: number = 0
   productForm: FormGroup = new FormGroup({
-    Name: new FormControl(),
+    Name: new FormControl('', Validators.required),
     Image: new FormControl(),
-    Brand: new FormControl(),
-    Category: new FormControl(),
-    Price: new FormControl()
+    Brand: new FormControl('', Validators.required),
+    Category: new FormControl('', Validators.required),
+    Price: new FormControl('', Validators.required)
   })
   filterForm: FormGroup = new FormGroup({
     name_like: new FormControl(),
@@ -146,6 +146,13 @@ export class ProductComponent implements OnInit {
       res => {
         this.prod = res
         this.fileName = this.prod.image
+        this.loadBrandByCategory(this.prod.categoryId)
+        this.productForm.patchValue({
+          Name: this.prod.name,
+          Category: this.prod.categoryId,
+          Brand: this.prod.brandId,
+          Price: this.prod.price
+      })
       },
       err => {
         console.log(err);

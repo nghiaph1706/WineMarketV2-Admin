@@ -7,36 +7,48 @@
                     <div class="mb-3">
                         <label for="exampleInputEmail1" class="form-label">Username</label>
                         <input type="text" formControlName="Username" value="{{user.username}}" class="form-control">
+                        <span style="color: red;" *ngIf="userForm.controls['Username'].errors?.['required']">
+                            Username is required.
+                        </span>
                     </div>
                     <div class="mb-3">
                         <label for="formFile" class="form-label">Image</label>
-                        <input class="form-control" formControlName="Image" type="file" id="formFile" (change)="onFileSelected($event)">
+                        <input class="form-control" formControlName="Image" type="file" accept="image/*" id="formFile"
+                            (change)="onFileSelected($event)">
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputEmail1" class="form-label">Email</label>
                         <input type="email" formControlName="Email" value="{{user.email}}" class="form-control"
                             id="exampleInputEmail1" aria-describedby="emailHelp">
+                        <span style="color: red;" *ngIf="userForm.controls['Email'].errors?.['required']">
+                            Email is required.
+                        </span>
                     </div>
                     <div class="mb-3">
                         <div class="row">
                             <label for="exampleInputEmail1" class="form-label">Role</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" id="inlineRadio1" formControlName="Role" value="true" [checked]="user.role"> 
+                            <input class="form-check-input" type="radio" id="inlineRadio1" formControlName="Role"
+                                value="true" [checked]="this.user.role ? true : false">
                             <label class="form-check-label" for="inlineRadio1">Admin</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" id="inlineRadio2" formControlName="Role" value="false" [checked]="!user.role">
+                            <input class="form-check-input" type="radio" id="inlineRadio2" formControlName="Role"
+                                value="false" [checked]="!this.user.role ? true : false">
                             <label class="form-check-label" for="inlineRadio2">User</label>
                         </div>
+                        <span class="form-check form-check-inline" style="color: red;" *ngIf="userForm.controls['Role'].errors?.['required']">
+                            Role is required.
+                        </span>
                     </div>
-                    <button *ngIf="user.id != ''" (click)="onUpdate(user.id)"
-                        class="btn btn-primary m-2">Update</button>
-                    <button *ngIf="user.id == ''" (click)="onCreate()" class="btn btn-primary m-2">Add</button>
+                    <button *ngIf="user.id != ''" (click)="onUpdate(user.id)" class="btn btn-primary m-2"
+                        [disabled]="this.userForm.invalid">Update</button>
+                    <button *ngIf="user.id == ''" (click)="onCreate()" class="btn btn-primary m-2"
+                        [disabled]="this.userForm.invalid">Add</button>
                     <button *ngIf="user.id != ''" (click)="onDelete(user.id)"
                         class="btn btn-primary m-2">Delete</button>
-                    <button *ngIf="user.id != ''" (click)="clearUserForm()"
-                        class="btn btn-primary m-2">Cancel</button>
+                    <button *ngIf="user.id != ''" (click)="clearUserForm()" class="btn btn-primary m-2">Cancel</button>
                 </form>
             </div>
         </div>
@@ -65,7 +77,8 @@
                             <option value="false">User</option>
                         </select>
                         <button type="submit" class="btn btn-primary ms-3"><i class="fas fa-filter"></i></button>
-                        <button (click)="clearFilterForm()" class="btn btn-primary ms-3"><i class="fas fa-times"></i></button>
+                        <button (click)="clearFilterForm()" class="btn btn-primary ms-3"><i
+                                class="fas fa-times"></i></button>
                     </form>
                 </div>
                 <div class="table-wrapper-scroll-y my-custom-scrollbar p-4">
@@ -86,8 +99,10 @@
                                 <td>{{user.email}}</td>
                                 <td>{{user.role ? 'Admin' : 'User'}}</td>
                                 <td>
-                                    <a (click)="onEdit(user.id)" class="btn btn-primary me-1"><i class="fas fa-edit"></i></a>
-                                    <a (click)="onDelete(user.id)" class="btn btn-primary me-1"><i class="fas fa-trash"></i></a>
+                                    <a (click)="onEdit(user.id)" class="btn btn-primary me-1"><i
+                                            class="fas fa-edit"></i></a>
+                                    <a (click)="onDelete(user.id)" class="btn btn-primary me-1"><i
+                                            class="fas fa-trash"></i></a>
                                 </td>
                             </tr>
                         </tbody>

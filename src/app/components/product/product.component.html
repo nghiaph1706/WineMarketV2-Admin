@@ -7,29 +7,45 @@
                     <div class="mb-3">
                         <label for="exampleInputEmail1" class="form-label">Product</label>
                         <input type="text" formControlName="Name" class="form-control" value="{{prod.name}}">
+                        <span style="color: red;"
+                            *ngIf="productForm.controls['Name'].errors?.['required']">
+                            Name is required.
+                        </span>
                     </div>
                     <div class="mb-3">
                         <label for="formFile" class="form-label">Image</label> 
-                        <input formControlName="Image" class="form-control" type="file" id="formFile" id="attach" (change)="onFileSelected($event)">
+                        <input formControlName="Image" class="form-control" type="file" accept="image/*" id="formFile" id="attach" (change)="onFileSelected($event)">
                     </div>
                     <label for="exampleInputEmail1" class="form-label">Category</label>
                     <select formControlName="Category" class="form-select mb-3" aria-label="Default select example" (change)="loadBrandByCategory($any($event.target).value)">
-                        <option disabled>--Category--</option>
+                        <option value="" disabled>--Category--</option>
                         <option *ngFor="let category of categories" value="{{category.id}}"
                             [selected]="category.id == prod.categoryId">{{category.name}}</option>
                     </select>
+                    <span style="color: red;"
+                        *ngIf="productForm.controls['Category'].errors?.['required']">
+                        Category is required.
+                    </span><br>
                     <label for="exampleInputEmail1" class="form-label">Brand</label>
                     <select formControlName="Brand" class="form-select mb-3" aria-label="Default select example">
-                        <option>--Brand--</option>
+                        <option value="">--Brand--</option>
                         <option *ngFor="let brand of brands" value="{{brand.id}}" [selected]="brand.id == prod.brandId">
                             {{brand.name}}</option>
                     </select> 
+                    <span style="color: red;"
+                        *ngIf="productForm.controls['Brand'].errors?.['required']">
+                        Brand is required.
+                    </span>
                     <div class="mb-3">
                         <label for="exampleInputEmail1" class="form-label">Price</label>
-                        <input type="text" formControlName="Price" class="form-control" value="{{prod.price}}">
+                        <input type="number" formControlName="Price" class="form-control" value="{{prod.price}}">
+                        <span style="color: red;"
+                            *ngIf="productForm.controls['Price'].errors?.['required']">
+                            Price is required.
+                        </span>
                     </div>
-                    <button *ngIf="prod.id != null" (click)="onUpdate(prod.id)" class="btn btn-primary m-2">Update</button>
-                    <button *ngIf="prod.id == null" (click)="onCreate()" class="btn btn-primary m-2">Add</button>
+                    <button *ngIf="prod.id != null" (click)="onUpdate(prod.id)" class="btn btn-primary m-2" [disabled]="this.productForm.invalid">Update</button>
+                    <button *ngIf="prod.id == null" (click)="onCreate()" class="btn btn-primary m-2" [disabled]="this.productForm.invalid">Add</button>
                     <button *ngIf="prod.id != null" (click)="onDelete(prod.id)" class="btn btn-primary m-2">Delete</button>
                     <button *ngIf="prod.id != null" (click)="clearProductForm()" class="btn btn-primary m-2">Cancel</button>
                 </form>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { UserService } from 'src/app/service/user/user.service';
@@ -12,8 +12,8 @@ import { MessageService } from 'src/app/service/utils/message.service';
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup = new FormGroup({
-    username: new FormControl(),
-    password: new FormControl()
+    username: new FormControl('', Validators.required),
+    password: new FormControl('', Validators.required)
   })
   constructor(private messageService: MessageService, private userService: UserService, private cookieService: CookieService, private route: Router, private authService: AuthService) { }
 

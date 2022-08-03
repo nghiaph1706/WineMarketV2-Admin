@@ -35,6 +35,7 @@ import { LoginComponent } from './components/login/login.component';
     FormsModule,
     ReactiveFormsModule,
     CommonModule,
+    ReactiveFormsModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot()
   ],

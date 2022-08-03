@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { CookieService } from 'ngx-cookie-service';
 import { User } from 'src/app/entity/user.entity';
 import { UserService } from 'src/app/service/user/user.service';
 import { MessageService } from 'src/app/service/utils/message.service';
@@ -12,10 +13,10 @@ import { UploadService } from 'src/app/service/utils/upload.service';
 export class UserComponent implements OnInit {
   fileName: string = ''
   userForm: FormGroup = new FormGroup({
-    Username: new FormControl,
+    Username: new FormControl('', Validators.required),
     Image: new FormControl,
-    Email: new FormControl,
-    Role: new FormControl
+    Email: new FormControl('', Validators.required),
+    Role: new FormControl('', Validators.required)
   })
   filterForm: FormGroup = new FormGroup({
     Username: new FormControl,
@@ -24,10 +25,10 @@ export class UserComponent implements OnInit {
   })
   user: User 
   users: Array<User>
-  constructor(private userService: UserService, private uploadService: UploadService, private messageService: MessageService) { }
+  constructor(private userService: UserService, private uploadService: UploadService, private messageService: MessageService, private cookieService: CookieService) { }
 
   ngOnInit(): void {
-    this.user = new User('','','','','null.png',true)
+    this.user = new User('','','','','null.png',false)
     this.fileName = 'null.png'
     this.userService.getAll().subscribe(
       res => {
@@ -105,19 +106,23 @@ export class UserComponent implements OnInit {
   }
 
   onDelete(id: string) {
-    this.userService.delete(id).subscribe(
-      res => {
-        this.messageService.showSuccess('Delete user success.')
-        this.clearUserForm()
-        this.clearFilterForm()
-      },
-      err => {
-        console.log(err);        
-        this.messageService.showError('Delete user failed.')
-        this.clearUserForm()
-        this.clearFilterForm()
-      }
-    );
+    if (this.cookieService.get('user_Id') === id) {
+      this.messageService.showError('Delete user failed. Can not delete yourself')
+    } else {
+      this.userService.delete(id).subscribe(
+        res => {
+          this.messageService.showSuccess('Delete user success.')
+          this.clearUserForm()
+          this.clearFilterForm()
+        },
+        err => {
+          console.log(err);        
+          this.messageService.showError('Delete user failed.')
+          this.clearUserForm()
+          this.clearFilterForm()
+        }
+      );
+    }
   }
 
   onEdit(id: string) {
@@ -125,6 +130,11 @@ export class UserComponent implements OnInit {
       res => {
         this.user = res
         this.fileName = this.user.image
+        this.userForm.patchValue({
+          Username: this.user.username,
+          Email: this.user.email,
+          Role: this.user.role
+        })
       },
       err => {
         console.log(err);
