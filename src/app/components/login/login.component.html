@@ -31,32 +31,35 @@
                     <div class="card cascading-right"
                         style="background: hsla(0, 0%, 100%, 0.55); backdrop-filter: blur(30px); ">
                         <div class="card-body p-5 shadow-5 text-center">
-                            <h2 class="fw-bold mb-5">Admin WineMarket</h2>
+                            <h2 class="fw-bold">Admin WineMarket</h2>
+                            <span class="mb-3 d-flex justify-content-center">
+                                <p (click)="switchLanguage('vn')" class="me-3">VN</p>|<p (click)="switchLanguage('en')" class="ms-3">EN</p>
+                            </span>
                             <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
 
                                 <!-- Email input -->
                                 <div class="form-outline mb-4">
                                     <input type="text" class="form-control" formControlName="username"
-                                        placeholder="Username" />
+                                        placeholder="{{'lblUsername' | translate}}" />
                                     <span style="color: red;"
                                         *ngIf="loginForm.controls['username'].errors?.['required']">
-                                        Username is required.
+                                        {{'errUsername' | translate}}
                                     </span>
                                 </div>
 
                                 <!-- Password input -->
                                 <div class="form-outline mb-4">
                                     <input type="password" class="form-control" formControlName="password"
-                                        placeholder="Password" />
+                                        placeholder="{{'lblPassword' | translate}}" />
                                     <span style="color: red;"
                                         *ngIf="loginForm.controls['password'].errors?.['required']">
-                                        Password is required.
+                                        {{'errPassword' | translate}}
                                     </span>
                                 </div>
 
                                 <!-- Submit button -->
                                 <button type="submit" class="btn btn-primary btn-block mb-4" [disabled]="this.loginForm.invalid">
-                                    Login
+                                    {{'btnLogin' | translate}}
                                 </button>
                             </form>
                         </div>

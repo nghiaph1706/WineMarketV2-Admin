@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { CookieService } from 'ngx-cookie-service';
 import { UserService } from 'src/app/service/user/user.service';
 import { AuthService } from 'src/app/service/utils/auth.service';
@@ -15,9 +15,16 @@ export class LoginComponent implements OnInit {
     username: new FormControl('', Validators.required),
     password: new FormControl('', Validators.required)
   })
-  constructor(private messageService: MessageService, private userService: UserService, private cookieService: CookieService, private route: Router, private authService: AuthService) { }
+  constructor(private messageService: MessageService, private userService: UserService, private cookieService: CookieService, private authService: AuthService, private translate: TranslateService) { }
 
   ngOnInit(): void {
+  }
+
+
+
+  switchLanguage(lang: string){
+    this.cookieService.set("locale", lang)
+    this.translate.use(lang)
   }
 
   onLogin() {
@@ -27,14 +34,14 @@ export class LoginComponent implements OnInit {
         this.cookieService.set('user_Id', data.userId);
         this.cookieService.set('isAdmin', data.isAdmin);
         if (Boolean(JSON.parse(data.isAdmin))) {
-          this.messageService.showSuccess('Login success!')
+          this.messageService.showSuccess(this.translate.instant('notiLoginSuccess'))
           window.location.reload()
         } else {
-          this.messageService.showError('Login failed. Please try again.')
+          this.messageService.showError(this.translate.instant('notiLoginError'))
         }
       },
       error => {
-        this.messageService.showError('Login failed. Please try again.')
+        this.messageService.showError(this.translate.instant('notiLoginError'))
         this.userService.logout()
       }
     )

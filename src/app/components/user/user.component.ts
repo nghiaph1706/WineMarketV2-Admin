@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 import { CookieService } from 'ngx-cookie-service';
 import { User } from 'src/app/entity/user.entity';
 import { UserService } from 'src/app/service/user/user.service';
@@ -25,7 +26,7 @@ export class UserComponent implements OnInit {
   })
   user: User 
   users: Array<User>
-  constructor(private userService: UserService, private uploadService: UploadService, private messageService: MessageService, private cookieService: CookieService) { }
+  constructor(private userService: UserService, private uploadService: UploadService, private messageService: MessageService, private cookieService: CookieService, public translate: TranslateService) { }
 
   ngOnInit(): void {
     this.user = new User('','','','','null.png',false)
@@ -36,7 +37,7 @@ export class UserComponent implements OnInit {
       },
       err => {
         console.log(err)
-        this.messageService.showError('Failed to load List user')
+        this.messageService.showError(this.translate.instant('notiLoadUserListError'))
       }
     )
   }
@@ -60,12 +61,12 @@ export class UserComponent implements OnInit {
 
     this.userService.update(user).subscribe(
       data => {
-        this.messageService.showSuccess('Update user success.')
+        this.messageService.showSuccess(this.translate.instant('notiUpdateUserSuccess'))
         this.clearUserForm()
         this.clearFilterForm()
       },
       error => {
-        this.messageService.showError('Update user failed')
+        this.messageService.showError(this.translate.instant('notiUpdateUserError'))
         this.clearUserForm()
         this.clearFilterForm()
       }
@@ -91,12 +92,12 @@ export class UserComponent implements OnInit {
     
     this.userService.create(user).subscribe(
       data => {
-        this.messageService.showSuccess('Create user success.')
+        this.messageService.showSuccess(this.translate.instant('notiCreateUserSuccess'))
         this.clearUserForm()
         this.clearFilterForm()
       },
       error => {
-        this.messageService.showError('Create user failed')
+        this.messageService.showError(this.translate.instant('notiCreateUserError'))
         this.clearUserForm()
         this.clearFilterForm()
         console.log(error);
@@ -107,17 +108,17 @@ export class UserComponent implements OnInit {
 
   onDelete(id: string) {
     if (this.cookieService.get('user_Id') === id) {
-      this.messageService.showError('Delete user failed. Can not delete yourself')
+      this.messageService.showError(this.translate.instant('notiDeleteYourself'))
     } else {
       this.userService.delete(id).subscribe(
         res => {
-          this.messageService.showSuccess('Delete user success.')
+          this.messageService.showSuccess(this.translate.instant('notiDeleteUserSuccess'))
           this.clearUserForm()
           this.clearFilterForm()
         },
         err => {
           console.log(err);        
-          this.messageService.showError('Delete user failed.')
+          this.messageService.showError(this.translate.instant('notiDeleteUserError'))
           this.clearUserForm()
           this.clearFilterForm()
         }

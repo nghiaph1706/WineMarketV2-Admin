@@ -2,52 +2,52 @@
     <div class="row g-4">
         <div class="col-sm-12 col-xl-6">
             <div class="bg-light rounded h-100 p-4">
-                <h6 class="mb-4">Product</h6>
+                <h6 class="mb-4">{{'titleProduct' | translate}}</h6>
                 <form [formGroup]="productForm" enctype="multipart/form-data">
                     <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label">Product</label>
+                        <label for="exampleInputEmail1" class="form-label">{{'lblNameProduct' | translate}}</label>
                         <input type="text" formControlName="Name" class="form-control" value="{{prod.name}}">
                         <span style="color: red;"
                             *ngIf="productForm.controls['Name'].errors?.['required']">
-                            Name is required.
+                            {{'errNameProduct' | translate}}
                         </span>
                     </div>
                     <div class="mb-3">
-                        <label for="formFile" class="form-label">Image</label> 
+                        <label for="formFile" class="form-label">{{'lblImage' | translate}}</label> 
                         <input formControlName="Image" class="form-control" type="file" accept="image/*" id="formFile" id="attach" (change)="onFileSelected($event)">
                     </div>
-                    <label for="exampleInputEmail1" class="form-label">Category</label>
+                    <label for="exampleInputEmail1" class="form-label">{{'lblCategory' | translate}}</label>
                     <select formControlName="Category" class="form-select mb-3" aria-label="Default select example" (change)="loadBrandByCategory($any($event.target).value)">
-                        <option value="" disabled>--Category--</option>
+                        <option value="" disabled>--{{'lblCategory' | translate}}--</option>
                         <option *ngFor="let category of categories" value="{{category.id}}"
                             [selected]="category.id == prod.categoryId">{{category.name}}</option>
                     </select>
                     <span style="color: red;"
                         *ngIf="productForm.controls['Category'].errors?.['required']">
-                        Category is required.
+                        {{'errCategory' | translate}}
                     </span><br>
-                    <label for="exampleInputEmail1" class="form-label">Brand</label>
+                    <label for="exampleInputEmail1" class="form-label">{{'lblBrand' | translate}}</label>
                     <select formControlName="Brand" class="form-select mb-3" aria-label="Default select example">
-                        <option value="">--Brand--</option>
+                        <option value="">--{{'lblBrand' | translate}}--</option>
                         <option *ngFor="let brand of brands" value="{{brand.id}}" [selected]="brand.id == prod.brandId">
                             {{brand.name}}</option>
                     </select> 
                     <span style="color: red;"
                         *ngIf="productForm.controls['Brand'].errors?.['required']">
-                        Brand is required.
+                        {{'errBrand' | translate}}
                     </span>
                     <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label">Price</label>
+                        <label for="exampleInputEmail1" class="form-label">{{'lblPrice' | translate}}</label>
                         <input type="number" formControlName="Price" class="form-control" value="{{prod.price}}">
                         <span style="color: red;"
                             *ngIf="productForm.controls['Price'].errors?.['required']">
-                            Price is required.
+                            {{'errPrice' | translate}}
                         </span>
                     </div>
-                    <button *ngIf="prod.id != null" (click)="onUpdate(prod.id)" class="btn btn-primary m-2" [disabled]="this.productForm.invalid">Update</button>
-                    <button *ngIf="prod.id == null" (click)="onCreate()" class="btn btn-primary m-2" [disabled]="this.productForm.invalid">Add</button>
-                    <button *ngIf="prod.id != null" (click)="onDelete(prod.id)" class="btn btn-primary m-2">Delete</button>
-                    <button *ngIf="prod.id != null" (click)="clearProductForm()" class="btn btn-primary m-2">Cancel</button>
+                    <button *ngIf="prod.id != null" (click)="onUpdate(prod.id)" class="btn btn-primary m-2" [disabled]="this.productForm.invalid">{{'btnUpdate' | translate}}</button>
+                    <button *ngIf="prod.id == null" (click)="onCreate()" class="btn btn-primary m-2" [disabled]="this.productForm.invalid">{{'btnAdd' | translate}}</button>
+                    <button *ngIf="prod.id != null" (click)="onDelete(prod.id)" class="btn btn-primary m-2">{{'btnDelete' | translate}}</button>
+                    <button *ngIf="prod.id != null" (click)="clearProductForm()" class="btn btn-primary m-2">{{'btnClear' | translate}}</button>
                 </form>
             </div>
         </div>
@@ -66,23 +66,23 @@
             <div class="bg-light rounded h-60 p-4">
                 <div class="row">
                     <form class="d-none d-md-flex " [formGroup]="filterForm" (ngSubmit)="onFilter()">
-                        <input value=" " class="form-control border-0" type="text" formControlName="name_like" placeholder="Search Product">
+                        <input value=" " class="form-control border-0" type="text" formControlName="name_like" placeholder="{{'lblNameProduct' | translate}}">
                         <select formControlName="sort" class="form-select ms-3" aria-label="Default select example">
-                            <option disabled>--Sort--</option>
-                            <option value="name">Name</option>
-                            <option value="price">Price</option>
+                            <option disabled>--{{'lblSortBy' | translate}}--</option>
+                            <option value="name">{{'lblNameProduct' | translate}}</option>
+                            <option value="price">{{'lblPrice' | translate}}</option>
                         </select>
                         <select formControlName="order" class="form-select ms-3" aria-label="Default select example">
-                            <option disabled>--Order--</option>
-                            <option value="asc">ASC</option>
-                            <option value="desc">DESC</option>
+                            <option disabled>--{{'lblOrderBy' | translate}}--</option>
+                            <option value="asc">{{'lblASC' | translate}}</option>
+                            <option value="desc">{{'lblDESC' | translate}}</option>
                         </select>
                         <select formControlName="categoryId" class="form-select ms-3" aria-label="Default select example" (change)="loadBrandByCategory($any($event.target).value)">
-                            <option disabled>--Category--</option>
+                            <option disabled>--{{'lblCategory' | translate}}--</option>
                             <option *ngFor="let category of categories" value="{{category.id}}">{{category.name}}</option>
                         </select>
                         <select formControlName="brandId" class="form-select ms-3" aria-label="Default select example">
-                            <option>--Brand--</option>
+                            <option>--{{'lblBrand' | translate}}--</option>
                             <option *ngFor="let brand of brands" value="{{brand.id}}">{{brand.name}}</option>
                         </select>
                         <button type="submit" class="btn btn-primary ms-3"><i class="fas fa-filter"></i></button>
@@ -94,11 +94,11 @@
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Product</th>
-                                <th scope="col">Brand</th>
-                                <th scope="col">Category</th>
-                                <th scope="col">Price</th>
-                                <th scope="col">Action</th>
+                                <th scope="col">{{'lblNameProduct' | translate}}</th>
+                                <th scope="col">{{'lblBrand' | translate}}</th>
+                                <th scope="col">{{'lblCategory' | translate}}</th>
+                                <th scope="col">{{'lblPrice' | translate}}</th>
+                                <th scope="col">{{'lblAction' | translate}}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -117,8 +117,8 @@
                     </table>
                 </div>
                 <div class="btn-group" role="group" aria-label="Basic example">
-                    <button (click)="showProductPrev(page)" type="button" class="btn btn-primary">Previous</button>
-                    <button (click)="showProductNext(page)" type="button" class="btn btn-primary">Next</button>
+                    <button (click)="showProductPrev(page)" type="button" class="btn btn-primary">{{'btnPrev' | translate}}</button>
+                    <button (click)="showProductNext(page)" type="button" class="btn btn-primary">{{'btnNext' | translate}}</button>
                 </div>
             </div>
         </div>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 import { Brand } from 'src/app/entity/brand.entity';
 import { Category } from 'src/app/entity/category.entity';
 import { Product } from 'src/app/entity/product.entity';
@@ -34,7 +35,7 @@ export class ProductComponent implements OnInit {
   categories: Array<Category> = new Array()
   products: Array<any>
   prod: Product = new Product()
-  constructor(private brandService: BrandService, private categoryService: CategoryService, private productService: ProductService, private uploadService: UploadService, private messageService: MessageService) { }
+  constructor(private brandService: BrandService, private categoryService: CategoryService, private productService: ProductService, private uploadService: UploadService, private messageService: MessageService, private translate: TranslateService) { }
 
   ngOnInit(): void {
     this.prod.image = 'null.png'
@@ -53,7 +54,7 @@ export class ProductComponent implements OnInit {
       },
       err => {
         console.log(err)
-        this.messageService.showError('Failed to load List product')
+        this.messageService.showError(this.translate.instant('notiLoadProductListError'))
       }
     )
   }
@@ -79,12 +80,12 @@ export class ProductComponent implements OnInit {
 
     this.productService.update(product).subscribe(
       data => {
-        this.messageService.showSuccess('Update product success.')
+        this.messageService.showSuccess(this.translate.instant('notiUpdateProductSuccess'))
         this.clearProductForm()
         this.clearFilterForm()
       },
       error => {
-        this.messageService.showError('Update product failed')
+        this.messageService.showError(this.translate.instant('notiUpdateProductError'))
         this.clearProductForm()
         this.clearFilterForm()
       }
@@ -113,12 +114,12 @@ export class ProductComponent implements OnInit {
 
     this.productService.create(product).subscribe(
       data => {
-        this.messageService.showSuccess('Create product success.')
+        this.messageService.showSuccess(this.translate.instant('notiCreateProductSuccess'))
         this.clearProductForm()
         this.clearFilterForm()
       },
       error => {
-        this.messageService.showError('Create product failed')
+        this.messageService.showError(this.translate.instant('notiCreateProductError'))
         this.clearProductForm()
         this.clearFilterForm()
       }
@@ -128,13 +129,13 @@ export class ProductComponent implements OnInit {
   onDelete(id: string) {
     this.productService.delete(id).subscribe(
       res => {
-        this.messageService.showSuccess('Delete product success.')
+        this.messageService.showSuccess(this.translate.instant('notiDeleteProductSuccess'))
         this.clearProductForm()
         this.clearFilterForm()
       },
       err => {
         console.log(err);        
-        this.messageService.showSuccess('Delete product failed.')
+        this.messageService.showSuccess(this.translate.instant('notiDeleteProductError'))
         this.clearProductForm()
         this.clearFilterForm()
       }

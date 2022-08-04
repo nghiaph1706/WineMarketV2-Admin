@@ -4,19 +4,19 @@
             <div class="bg-light rounded h-100 p-4">
                 <form>
                     <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label">User</label>
+                        <label for="exampleInputEmail1" class="form-label">{{'lblUsername' | translate}}</label>
                         <input type="text" name="Name" class="form-control" value="{{username}}" readonly>
                     </div>
                     <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label">Total</label>
+                        <label for="exampleInputEmail1" class="form-label">{{'lblTotal' | translate}}</label>
                         <input type="text" name="Name" class="form-control" value="{{cart.total}}" readonly>
                     </div>
                     <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label">Date</label>
+                        <label for="exampleInputEmail1" class="form-label">{{'lblDateOrder' | translate}}</label>
                         <input type="text" name="Name" class="form-control" value="{{cart.dateOrder}}" readonly>
                     </div>
                     <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label">Status</label>
+                        <label for="exampleInputEmail1" class="form-label">{{'lblStatus' | translate}}</label>
                         <input type="text" name="Name" class="form-control" value="{{cart.status}}" readonly>
                     </div>
                     <button *ngIf="cart.id != null && cart.status != 'Pending'" (click)="updateStatus(cart.id, 'Pending')" class="btn btn-primary ms-3"><i class="fas fa-box"></i></button> 
@@ -33,9 +33,9 @@
                         <thead>
                             <tr class="text-dark">
                                 <th scope="col">#</th>
-                                <th scope="col">Product Name</th>
-                                <th scope="col">Quantity</th>
-                                <th scope="col">Price</th>
+                                <th scope="col">{{'lblNameProduct' | translate}}</th>
+                                <th scope="col">{{'lblQuantity' | translate}}</th>
+                                <th scope="col">{{'lblPrice' | translate}}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -59,16 +59,16 @@
                 <div class="row">
                     <form class="d-none d-md-flex " [formGroup]="filterForm" (ngSubmit)="onFilter()">
                         <select formControlName="Date" class="form-select ms-3" aria-label="Default select example">
-                            <option disabled>--Sort by date--</option>
-                            <option value="asc">ASC</option>
-                            <option value="desc">DESC</option>
+                            <option disabled>--{{'lblSortDate' | translate}}--</option>
+                            <option value="asc">{{'lblASC' | translate}}</option>
+                            <option value="desc">{{'lblDESC' | translate}}</option>
                         </select>
                         <input class="form-control border-0 ms-3" type="text" formControlName="Username" placeholder="Search by Username">
                         <select formControlName="Status" class="form-select ms-3" aria-label="Default select example">
-                            <option disabled>--Status--</option>
-                            <option value="Pending">Pending</option>
-                            <option value="Delivering">Delivering</option>
-                            <option value="Fisnish">Fisnish</option>
+                            <option disabled>--{{'lblStatus' | translate}}--</option>
+                            <option value="Pending">{{'lblPending' | translate}}</option>
+                            <option value="Delivering">{{'lblDelivering' | translate}}</option>
+                            <option value="Fisnish">{{'lblFisnish' | translate}}</option>
                         </select>
                         <button type="submit" class="btn btn-primary ms-3"><i class="fas fa-filter"></i></button>
                         <button (click)="clearFilterForm()" class="btn btn-primary ms-3"><i class="fas fa-times"></i></button>
@@ -78,11 +78,11 @@
                     <table id="tableData" class="table table-hover">
                         <thead>
                             <tr class="text-dark">
-                                <th scope="col">Date</th>
-                                <th scope="col">Customer</th>
-                                <th scope="col">Amount</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">Action</th>
+                                <th scope="col">{{'lblDateOrder' | translate}}</th>
+                                <th scope="col">{{'lblUsername' | translate}}</th>
+                                <th scope="col">{{'lblTotal' | translate}}</th>
+                                <th scope="col">{{'lblStatus' | translate}}</th>
+                                <th scope="col">{{'lblAction' | translate}}</th>
                             </tr>
                         </thead>
                         <tbody>

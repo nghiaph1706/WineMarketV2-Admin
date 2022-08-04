@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 import { Cart } from 'src/app/entity/cart.entity';
 import { CartService } from 'src/app/service/cart/cart.service';
 import { CartDetailsService } from 'src/app/service/cartDetails/cart-details.service';
@@ -20,7 +21,7 @@ export class OrderComponent implements OnInit {
     Username: new FormControl,
     Status: new FormControl
   })
-  constructor(private cartService: CartService, private userService: UserService, private messageService: MessageService, private cartDService: CartDetailsService) { }
+  constructor(private cartService: CartService, private userService: UserService, private messageService: MessageService, private cartDService: CartDetailsService, private translate: TranslateService) { }
 
   ngOnInit(): void {
     this.cartService.getAll().subscribe(
@@ -60,13 +61,14 @@ export class OrderComponent implements OnInit {
         cart.status = status
         this.cartService.update(cart).subscribe(
           res => {
-            this.messageService.showSuccess('Update status: ' + status)
+            this.messageService.showSuccess(this.translate.instant('notiUpdateCart') + status)
             this.cartService.getAll().subscribe(
               res => {
                 this.carts = res
               },
               err => {
                 console.log(err);
+                this.messageService.showError(this.translate.instant('notiUpdateCart') + status)
               }
             )
           }
@@ -83,7 +85,7 @@ export class OrderComponent implements OnInit {
   onDelete(id: string) {
     this.cartService.delete(id).subscribe(
       res => {
-        this.messageService.showSuccess('Delete cart success.')
+        this.messageService.showWarning(this.translate.instant('notiDeleteCartSuccess'))
       }
     )
     this.cartService.getAll().subscribe(
@@ -119,7 +121,7 @@ export class OrderComponent implements OnInit {
       },
       err => {
         console.log(err)
-        this.messageService.showError('Failed to load List user')
+        this.messageService.showError(this.translate.instant('notiLoadUserListError'))
       }
     )
   }

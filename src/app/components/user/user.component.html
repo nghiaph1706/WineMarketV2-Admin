@@ -2,53 +2,53 @@
     <div class="row g-4">
         <div class="col-sm-12 col-xl-6">
             <div class="bg-light rounded h-100 p-4">
-                <h6 class="mb-4">User</h6>
+                <h6 class="mb-4">{{'titleUser' | translate}}</h6>
                 <form [formGroup]="userForm" enctype="multipart/form-data">
                     <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label">Username</label>
+                        <label for="exampleInputEmail1" class="form-label">{{'lblUsername' | translate}}</label>
                         <input type="text" formControlName="Username" value="{{user.username}}" class="form-control">
                         <span style="color: red;" *ngIf="userForm.controls['Username'].errors?.['required']">
-                            Username is required.
+                            {{'errUsername' | translate}}
                         </span>
                     </div>
                     <div class="mb-3">
-                        <label for="formFile" class="form-label">Image</label>
+                        <label for="formFile" class="form-label">{{'lblImage' | translate}}</label>
                         <input class="form-control" formControlName="Image" type="file" accept="image/*" id="formFile"
                             (change)="onFileSelected($event)">
                     </div>
                     <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label">Email</label>
+                        <label for="exampleInputEmail1" class="form-label">{{'lblEmail' | translate}}</label>
                         <input type="email" formControlName="Email" value="{{user.email}}" class="form-control"
                             id="exampleInputEmail1" aria-describedby="emailHelp">
                         <span style="color: red;" *ngIf="userForm.controls['Email'].errors?.['required']">
-                            Email is required.
+                            {{'errEmail' | translate}}
                         </span>
                     </div>
                     <div class="mb-3">
                         <div class="row">
-                            <label for="exampleInputEmail1" class="form-label">Role</label>
+                            <label for="exampleInputEmail1" class="form-label">{{'lblRole' | translate}}</label>
                         </div>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" id="inlineRadio1" formControlName="Role"
                                 value="true" [checked]="this.user.role ? true : false">
-                            <label class="form-check-label" for="inlineRadio1">Admin</label>
+                            <label class="form-check-label" for="inlineRadio1">{{'lblAdmin' | translate}}</label>
                         </div>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" id="inlineRadio2" formControlName="Role"
                                 value="false" [checked]="!this.user.role ? true : false">
-                            <label class="form-check-label" for="inlineRadio2">User</label>
+                            <label class="form-check-label" for="inlineRadio2">{{'lblUser' | translate}}</label>
                         </div>
                         <span class="form-check form-check-inline" style="color: red;" *ngIf="userForm.controls['Role'].errors?.['required']">
-                            Role is required.
+                            {{'errRole' | translate}}
                         </span>
                     </div>
                     <button *ngIf="user.id != ''" (click)="onUpdate(user.id)" class="btn btn-primary m-2"
-                        [disabled]="this.userForm.invalid">Update</button>
+                        [disabled]="this.userForm.invalid">{{'btnUpdate' | translate}}</button>
                     <button *ngIf="user.id == ''" (click)="onCreate()" class="btn btn-primary m-2"
-                        [disabled]="this.userForm.invalid">Add</button>
+                        [disabled]="this.userForm.invalid">{{'btnAdd' | translate}}</button>
                     <button *ngIf="user.id != ''" (click)="onDelete(user.id)"
-                        class="btn btn-primary m-2">Delete</button>
-                    <button *ngIf="user.id != ''" (click)="clearUserForm()" class="btn btn-primary m-2">Cancel</button>
+                        class="btn btn-primary m-2">{{'btnDelete' | translate}}</button>
+                    <button *ngIf="user.id != ''" (click)="clearUserForm()" class="btn btn-primary m-2">{{'btnClear' | translate}}</button>
                 </form>
             </div>
         </div>
@@ -68,13 +68,13 @@
                 <div class="row">
                     <form class="d-none d-md-flex " [formGroup]="filterForm" (ngSubmit)="onFilter()">
                         <input class="form-control border-0 ms-3" type="text" formControlName="Username"
-                            placeholder="Search by Username">
+                            placeholder="{{'lblUsername' | translate}}">
                         <input class="form-control border-0 ms-3" type="email" formControlName="Email"
-                            placeholder="Search by Email">
+                            placeholder="{{'lblEmail' | translate}}">
                         <select formControlName="Role" class="form-select ms-3" aria-label="Default select example">
-                            <option disabled>--Role--</option>
-                            <option value="true">Admin</option>
-                            <option value="false">User</option>
+                            <option disabled>--{{'lblRole' | translate}}--</option>
+                            <option value="true">{{'lblAdmin' | translate}}</option>
+                            <option value="false">{{'lblUser' | translate}}</option>
                         </select>
                         <button type="submit" class="btn btn-primary ms-3"><i class="fas fa-filter"></i></button>
                         <button (click)="clearFilterForm()" class="btn btn-primary ms-3"><i
@@ -86,10 +86,10 @@
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Username</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Role</th>
-                                <th scope="col">Action</th>
+                                <th scope="col">{{'lblUsername' | translate}}</th>
+                                <th scope="col">{{'lblEmail' | translate}}</th>
+                                <th scope="col">{{'lblRole' | translate}}</th>
+                                <th scope="col">{{'lblAction' | translate}}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -97,7 +97,7 @@
                                 <td>{{i + 1}}</td>
                                 <td>{{user.username}}</td>
                                 <td>{{user.email}}</td>
-                                <td>{{user.role ? 'Admin' : 'User'}}</td>
+                                <td>{{user.role ? this.translate.instant('lblAdmin') : this.translate.instant('lblUser') }}</td>
                                 <td>
                                     <a (click)="onEdit(user.id)" class="btn btn-primary me-1"><i
                                             class="fas fa-edit"></i></a>
