@@ -15,6 +15,6 @@ Run `npm install` for reinstall libary.
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
 ## Heroku deploy
-https://winemarketv2-server.herokuapp.com/
+[https://winemarketv2-server.herokuapp.com/](https://winemarketv2-admin.herokuapp.com/)
 
 
